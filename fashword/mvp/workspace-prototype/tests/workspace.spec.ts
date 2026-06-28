@@ -1,7 +1,18 @@
 import { expect, test } from "@playwright/test";
 
 const appUrl = "http://127.0.0.1:4173";
-const evidenceDir = "../.omo/ulw-loop/evidence";
+const evidenceDir = "test-results/ulw-evidence";
+const bannedInternalTerms = [
+  "Blend Shape",
+  "Bone Scale",
+  "Skinning",
+  "Cloth Simulation",
+  "Pattern DSL",
+  "Geometry Engine",
+  "Validation",
+  "Blender",
+  "USD",
+];
 
 const requiredWorkspaceIds = [
   "top-bar",
@@ -33,11 +44,15 @@ test("desktop workspace visible contract @desktop", async ({ page }) => {
   await expect(page.getByTestId("shape-preview")).toContainText("도식화 기준 형태");
   await expect(page.getByTestId("shape-preview")).toContainText("앞면 도식화");
   await expect(page.getByTestId("shape-preview")).toContainText("뒷면 도식화");
+  await expect(page.locator(".sketch-reference")).toHaveAttribute("data-sketch-source", "도식화 컨펌본");
   await expect(page.getByTestId("body-proxy")).toBeVisible();
   await expect(page.getByTestId("skirt-proxy")).toBeVisible();
   await expect(page.getByTestId("fit-proxy-report")).toContainText("허리 확인");
   await expect(page.getByTestId("fit-proxy-report")).toContainText("힙 확인");
   await expect(page.getByTestId("fit-proxy-report")).toContainText("옆선 확인");
+  for (const term of bannedInternalTerms) {
+    await expect(page.getByText(term)).toHaveCount(0);
+  }
 
   await expect(page.getByTestId("skirt-length-value")).toHaveText("72cm");
   await page.getByRole("button", { name: "더 길게" }).click();

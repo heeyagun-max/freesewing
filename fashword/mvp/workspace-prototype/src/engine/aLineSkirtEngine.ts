@@ -1,9 +1,12 @@
+import type { ConfirmedSketch } from "../data/mockWorkspace";
+
 export type AlineSkirtInput = {
   waist: number;
   hip: number;
   waistToHip: number;
   skirtLength: number;
   hipEase: number;
+  confirmedSketch?: ConfirmedSketch;
 };
 
 type Point = { x: number; y: number };
@@ -72,12 +75,14 @@ export type AlineSkirtDraft = {
       pass: boolean;
       message: string;
     }>;
-    sketchReference: {
-      sourceLabel: string;
-      views: string[];
-      guides: string[];
-    };
+    sketchReference: ConfirmedSketch;
   };
+};
+
+const fallbackConfirmedSketch: ConfirmedSketch = {
+  sourceLabel: "도식화 컨펌본",
+  views: ["앞면", "뒷면"],
+  guides: ["허리선", "힙선", "밑단선"],
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, Math.round(value)));
@@ -191,11 +196,7 @@ export function draftAlineSkirt(input: AlineSkirtInput): AlineSkirtDraft {
         { label: "힙 확인", pass: report.hip.pass, message: report.hip.message },
         { label: "옆선 확인", pass: report.sideSeam.pass, message: report.sideSeam.message },
       ],
-      sketchReference: {
-        sourceLabel: "도식화 컨펌본",
-        views: ["앞면", "뒷면"],
-        guides: ["허리선", "힙선", "밑단선"],
-      },
+      sketchReference: input.confirmedSketch ?? fallbackConfirmedSketch,
     },
   };
 }

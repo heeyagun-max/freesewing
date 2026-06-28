@@ -13,7 +13,11 @@ export default function ThreeDPreview({ skirtLength, draft }: ThreeDPreviewProps
         <h2 id="shape-title">A라인 길이 미리보기</h2>
       </div>
       <p className="proxy-caption">도식화 기준 형태</p>
-      <div className="sketch-reference" aria-label="도식화 컨펌 기준">
+      <div
+        className="sketch-reference"
+        aria-label="도식화 컨펌 기준"
+        data-sketch-source={draft.fitProxy.sketchReference.sourceLabel}
+      >
         {draft.fitProxy.sketchReference.views.map((view) => (
           <span key={view}>{view} 도식화</span>
         ))}

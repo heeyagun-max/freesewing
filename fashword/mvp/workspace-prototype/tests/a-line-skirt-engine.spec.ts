@@ -98,3 +98,23 @@ test("links 3d fitting proxy to confirmed front and back flat sketch views", () 
     guides: ["허리선", "힙선", "밑단선"],
   });
 });
+
+test("uses confirmed sketch input as the fitting proxy sketch reference", () => {
+  const confirmedSketch = {
+    sourceLabel: "테스트 컨펌본",
+    views: ["테스트 앞면", "테스트 뒷면"],
+    guides: ["테스트 허리선", "테스트 힙선", "테스트 밑단선"],
+  };
+  const input = {
+    waist: 70,
+    hip: 94,
+    waistToHip: 20,
+    skirtLength: 72,
+    hipEase: 4,
+    confirmedSketch,
+  };
+
+  const draft = draftAlineSkirt(input);
+
+  expect(draft.fitProxy.sketchReference).toEqual(confirmedSketch);
+});

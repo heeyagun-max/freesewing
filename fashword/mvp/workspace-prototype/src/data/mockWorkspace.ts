@@ -1,6 +1,12 @@
 export type TaskStatus = "todo" | "doing" | "done";
 export type PrepState = "ready" | "check";
 
+export type ConfirmedSketch = {
+  sourceLabel: string;
+  views: string[];
+  guides: string[];
+};
+
 export type WorkspaceProject = {
   id: string;
   garmentName: string;
@@ -24,6 +30,7 @@ export type WorkspaceProject = {
     label: string;
     selected: boolean;
   }>;
+  confirmedSketch: ConfirmedSketch;
   outputPrep: Array<{
     id: string;
     label: string;
@@ -66,6 +73,11 @@ export const workspaceProject: WorkspaceProject = {
     { id: "side-balance", label: "옆선 균형 확인", selected: false },
     { id: "hem-length", label: "밑단 길이 민감", selected: true },
   ],
+  confirmedSketch: {
+    sourceLabel: "도식화 컨펌본",
+    views: ["앞면", "뒷면"],
+    guides: ["허리선", "힙선", "밑단선"],
+  },
   outputPrep: [
     {
       id: "paper",

@@ -42,8 +42,9 @@ export default function App() {
         waistToHip: getMeasurementNumber(measurements, "waistToHip", 20),
         skirtLength,
         hipEase: getMeasurementNumber(measurements, "ease", 4),
+        confirmedSketch: selectedProject.confirmedSketch,
       }),
-    [measurements, skirtLength],
+    [measurements, selectedProject.confirmedSketch, skirtLength],
   );
 
   const handleSave = () => {
