@@ -31,6 +31,8 @@ test("desktop workspace visible contract @desktop", async ({ page }) => {
     "길이 요청을 반영한 형태 참고입니다.",
   );
   await expect(page.getByTestId("shape-preview")).toContainText("도식화 기준 형태");
+  await expect(page.getByTestId("shape-preview")).toContainText("앞면 도식화");
+  await expect(page.getByTestId("shape-preview")).toContainText("뒷면 도식화");
   await expect(page.getByTestId("body-proxy")).toBeVisible();
   await expect(page.getByTestId("skirt-proxy")).toBeVisible();
   await expect(page.getByTestId("fit-proxy-report")).toContainText("허리 확인");

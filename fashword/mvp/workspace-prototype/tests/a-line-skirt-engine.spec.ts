@@ -88,3 +88,13 @@ test("returns 3d fitting proxy values from the same draft measurements and repor
     { label: "옆선 확인", pass: true, message: draft.report.sideSeam.message },
   ]);
 });
+
+test("links 3d fitting proxy to confirmed front and back flat sketch views", () => {
+  const draft = draftAlineSkirt({ waist: 70, hip: 94, waistToHip: 20, skirtLength: 72, hipEase: 4 });
+
+  expect(draft.fitProxy.sketchReference).toEqual({
+    sourceLabel: "도식화 컨펌본",
+    views: ["앞면", "뒷면"],
+    guides: ["허리선", "힙선", "밑단선"],
+  });
+});

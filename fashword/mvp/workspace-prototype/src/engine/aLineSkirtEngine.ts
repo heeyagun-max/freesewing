@@ -72,6 +72,11 @@ export type AlineSkirtDraft = {
       pass: boolean;
       message: string;
     }>;
+    sketchReference: {
+      sourceLabel: string;
+      views: string[];
+      guides: string[];
+    };
   };
 };
 
@@ -186,6 +191,11 @@ export function draftAlineSkirt(input: AlineSkirtInput): AlineSkirtDraft {
         { label: "힙 확인", pass: report.hip.pass, message: report.hip.message },
         { label: "옆선 확인", pass: report.sideSeam.pass, message: report.sideSeam.message },
       ],
+      sketchReference: {
+        sourceLabel: "도식화 컨펌본",
+        views: ["앞면", "뒷면"],
+        guides: ["허리선", "힙선", "밑단선"],
+      },
     },
   };
 }
