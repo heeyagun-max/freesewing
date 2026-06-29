@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { AlineSkirtDraft } from "../engine/aLineSkirtEngine";
 
 type PatternPreviewProps = {
@@ -13,6 +14,20 @@ export default function PatternPreview({
   draft,
   onSkirtLengthChange,
 }: PatternPreviewProps) {
+  const [openSourceIds, setOpenSourceIds] = useState<Set<string>>(new Set());
+
+  const toggleSource = (sourceId: string) => {
+    setOpenSourceIds((current) => {
+      const next = new Set(current);
+      if (next.has(sourceId)) {
+        next.delete(sourceId);
+      } else {
+        next.add(sourceId);
+      }
+      return next;
+    });
+  };
+
   return (
     <article className="panel preview-panel" data-testid="pattern-preview" aria-labelledby="pattern-title">
       <div className="panel-header">
@@ -82,6 +97,43 @@ export default function PatternPreview({
         {draft.report.messages.map((message) => (
           <p key={message}>{message}</p>
         ))}
+        {draft.report.correctionSources.length > 0 ? (
+          <div className="correction-source-list" aria-label="사용자 수정 기록 근거">
+            {draft.report.correctionSources.map((source) => {
+              const isOpen = openSourceIds.has(source.id);
+              const sourceTitle = source.message.split(" · ")[0] ?? source.label;
+
+              return (
+                <section className="correction-source-item" key={source.id}>
+                  <p>
+                    <span>{source.label}</span>
+                    {source.message}
+                  </p>
+                  <button
+                    type="button"
+                    className="source-detail-toggle"
+                    aria-expanded={isOpen}
+                    onClick={() => toggleSource(source.id)}
+                  >
+                    {sourceTitle} 세부 기록 {isOpen ? "접기" : "보기"}
+                  </button>
+                  {isOpen ? (
+                    <dl className="source-detail" data-testid={`correction-source-detail-${source.id}`}>
+                      <div>
+                        <dt>핏 기록</dt>
+                        <dd>{source.fitRecord}</dd>
+                      </div>
+                      <div>
+                        <dt>다음 조치</dt>
+                        <dd>{source.nextAction}</dd>
+                      </div>
+                    </dl>
+                  ) : null}
+                </section>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     </article>
   );

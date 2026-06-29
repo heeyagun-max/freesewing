@@ -7,6 +7,15 @@ export type ConfirmedSketch = {
   guides: string[];
 };
 
+export type CorrectionLogSource = {
+  id: string;
+  dateLabel: string;
+  request: string;
+  fitRecord: string;
+  nextAction: string;
+  sourceLabel: string;
+};
+
 export type WorkspaceProject = {
   id: string;
   garmentName: string;
@@ -37,13 +46,7 @@ export type WorkspaceProject = {
     state: PrepState;
     helper: string;
   }>;
-  fittingNotes: Array<{
-    id: string;
-    dateLabel: string;
-    request: string;
-    fitRecord: string;
-    nextAction: string;
-  }>;
+  fittingNotes: CorrectionLogSource[];
 };
 
 export const workspaceProject: WorkspaceProject = {
@@ -111,13 +114,15 @@ export const workspaceProject: WorkspaceProject = {
       request: "기본 미디 길이보다 조금 더 길게",
       fitRecord: "무릎 아래로 내려오는 A라인 비율을 원합니다.",
       nextAction: "길이를 76cm로 올리고 밑단 폭 변화를 확인합니다.",
+      sourceLabel: "사용자 수정 기록",
     },
     {
       id: "note-2",
       dateLabel: "제작 후 확인",
       request: "허리 뜸과 힙 당김 기록",
       fitRecord: "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
-      nextAction: "가봉 사진과 착용 메모를 Correction Log로 정리합니다.",
+      nextAction: "가봉 사진과 착용 메모를 사용자 수정 기록으로 정리합니다.",
+      sourceLabel: "사용자 수정 기록",
     },
   ],
 };

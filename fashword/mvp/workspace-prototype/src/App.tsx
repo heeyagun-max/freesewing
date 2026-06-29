@@ -43,8 +43,9 @@ export default function App() {
         skirtLength,
         hipEase: getMeasurementNumber(measurements, "ease", 4),
         confirmedSketch: selectedProject.confirmedSketch,
+        correctionLogSources: selectedProject.fittingNotes,
       }),
-    [measurements, selectedProject.confirmedSketch, skirtLength],
+    [measurements, selectedProject.confirmedSketch, selectedProject.fittingNotes, skirtLength],
   );
 
   const handleSave = () => {

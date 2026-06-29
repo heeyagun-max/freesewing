@@ -420,6 +420,63 @@ dd {
   line-height: 1.45;
 }
 
+.correction-source-list {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.55rem;
+}
+
+.correction-source-item {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.correction-source-list span {
+  display: inline-block;
+  margin-right: 0.45rem;
+  color: var(--accent);
+}
+
+.source-detail-toggle {
+  justify-self: start;
+  min-height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.25rem 0.55rem;
+  background: white;
+  color: var(--accent-strong);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.source-detail {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  border-left: 3px solid rgba(157, 79, 55, 0.36);
+  padding: 0.25rem 0 0.15rem 0.65rem;
+}
+
+.source-detail div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.source-detail dt {
+  color: var(--accent-strong);
+}
+
+.source-detail dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .length-control {
   display: grid;
   gap: 0.75rem;

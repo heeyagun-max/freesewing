@@ -1,4 +1,4 @@
-import type { ConfirmedSketch } from "../data/mockWorkspace";
+import type { ConfirmedSketch, CorrectionLogSource } from "../data/mockWorkspace";
 
 export type AlineSkirtInput = {
   waist: number;
@@ -7,6 +7,7 @@ export type AlineSkirtInput = {
   skirtLength: number;
   hipEase: number;
   confirmedSketch?: ConfirmedSketch;
+  correctionLogSources?: CorrectionLogSource[];
 };
 
 type Point = { x: number; y: number };
@@ -57,6 +58,13 @@ export type AlineSkirtDraft = {
       pass: boolean;
       message: string;
     };
+    correctionSources: Array<{
+      id: string;
+      label: string;
+      message: string;
+      fitRecord: string;
+      nextAction: string;
+    }>;
     messages: string[];
   };
   fitProxy: {
@@ -141,6 +149,14 @@ export function draftAlineSkirt(input: AlineSkirtInput): AlineSkirtDraft {
   const sideSeamMessage = sideSeamPass ? "PASS: 옆선 오차가 2% 이내다." : "FAIL: 옆선 오차가 2%를 넘는다.";
   const skirtLengthMessage = `PASS: 스커트 길이 ${measurements.skirtLength}cm로 제도 범위 안에 있다.`;
   const hipEaseMessage = `PASS: 힙 여유량은 ${measurements.hipEase}cm로 음수 없이 정규화됐다.`;
+  const correctionSources =
+    input.correctionLogSources?.map((source) => ({
+      id: source.id,
+      label: source.sourceLabel,
+      message: `${source.dateLabel} · ${source.request}`,
+      fitRecord: source.fitRecord,
+      nextAction: source.nextAction,
+    })) ?? [];
   const preview = {
     height: round(116 + lengthRatio * 72),
     hemWidth: round(118 + lengthRatio * 44),
@@ -164,6 +180,7 @@ export function draftAlineSkirt(input: AlineSkirtInput): AlineSkirtDraft {
       pass: sideSeamPass,
       message: sideSeamMessage,
     },
+    correctionSources,
     messages: [waistMessage, hipMessage, sideSeamMessage, skirtLengthMessage, hipEaseMessage],
   };
 

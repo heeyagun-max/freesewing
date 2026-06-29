@@ -66,6 +66,27 @@ test("desktop workspace visible contract @desktop", async ({ page }) => {
     "PASS: 힙 완성 98cm는 입력 힙 94cm에 여유 4cm를 더했다.",
   );
   await expect(page.getByTestId("draft-report")).toContainText("PASS: 옆선 오차가 2% 이내다.");
+  await expect(page.getByTestId("draft-report")).toContainText("사용자 수정 기록");
+  await expect(page.getByTestId("draft-report")).toContainText("제작 후 확인");
+  await expect(page.getByTestId("draft-report")).toContainText("허리 뜸과 힙 당김 기록");
+  await expect(page.getByTestId("draft-report")).not.toContainText(
+    "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
+  );
+  await expect(page.getByTestId("draft-report")).not.toContainText(
+    "가봉 사진과 착용 메모를 사용자 수정 기록으로 정리합니다.",
+  );
+  await page.getByRole("button", { name: "제작 후 확인 세부 기록 보기" }).click();
+  await expect(page.getByTestId("draft-report")).toContainText(
+    "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
+  );
+  await expect(page.getByTestId("draft-report")).toContainText(
+    "가봉 사진과 착용 메모를 사용자 수정 기록으로 정리합니다.",
+  );
+  await page.getByRole("button", { name: "제작 후 확인 세부 기록 접기" }).click();
+  await expect(page.getByTestId("draft-report")).not.toContainText(
+    "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
+  );
+  await expect(page.getByTestId("fitting-notes")).toContainText("허리 뜸과 힙 당김 기록");
   await page.screenshot({
     path: `${evidenceDir}/workspace-browser-desktop-longer.png`,
     fullPage: true,

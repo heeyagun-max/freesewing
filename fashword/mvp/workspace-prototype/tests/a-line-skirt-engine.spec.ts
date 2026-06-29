@@ -118,3 +118,33 @@ test("uses confirmed sketch input as the fitting proxy sketch reference", () => 
 
   expect(draft.fitProxy.sketchReference).toEqual(confirmedSketch);
 });
+
+test("adds user correction log sources to the draft report provenance", () => {
+  const draft = draftAlineSkirt({
+    waist: 70,
+    hip: 94,
+    waistToHip: 20,
+    skirtLength: 72,
+    hipEase: 4,
+    correctionLogSources: [
+      {
+        id: "note-2",
+        dateLabel: "제작 후 확인",
+        request: "허리 뜸과 힙 당김 기록",
+        fitRecord: "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
+        nextAction: "가봉 사진과 착용 메모를 사용자 수정 기록으로 정리합니다.",
+        sourceLabel: "사용자 수정 기록",
+      },
+    ],
+  });
+
+  expect(draft.report.correctionSources).toEqual([
+    {
+      id: "note-2",
+      label: "사용자 수정 기록",
+      message: "제작 후 확인 · 허리 뜸과 힙 당김 기록",
+      fitRecord: "최종 핏은 실제 제작 후 허리, 힙, 옆선 기준으로 기록합니다.",
+      nextAction: "가봉 사진과 착용 메모를 사용자 수정 기록으로 정리합니다.",
+    },
+  ]);
+});
